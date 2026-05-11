@@ -1,0 +1,135 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f6fa;
+    margin: 0;
+    padding: 0;
+}
+
+.hero {
+    background: #041E42;
+    color: white;
+    text-align: center;
+    padding: 35px 20px;
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: 34px;
+}
+
+.hero p {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.add-box {
+    max-width: 1000px;
+    margin: 25px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.add-box h2 {
+    color: #041E42;
+}
+
+.add-box input {
+    margin: 6px;
+    width: 180px;
+}
+
+.controls {
+    max-width: 1000px;
+    margin: 25px auto;
+    display: flex;
+    gap: 12px;
+    padding: 0 20px;
+}
+
+input, select, button {
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.controls input {
+    flex: 1;
+}
+
+button {
+    background: #041E42;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063b7a;
+}
+
+.leader-box {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.leader-box h2 {
+    color: #041E42;
+}
+
+#leaderCards {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+.leader-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    border-top: 5px solid #041E42;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.leader-card h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.leader-card p {
+    color: #555;
+    margin: 5px 0;
+}
+
+.leader-card strong {
+    font-size: 26px;
+    color: #041E42;
+}
+
+table {
+    width: calc(100% - 40px);
+    margin: 25px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+th {
+    background: #041E42;
+    color: white;
+    padding: 12px;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+tr:hover {
+    background: #f1f5fb;
+}

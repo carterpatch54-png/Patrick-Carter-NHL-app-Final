@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NHL Player Stats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="hero">
+        <h1>NHL Player Stats Dashboard</h1>
+        <p>Search players, add new stats, and find stat leaders.</p>
+    </div>
+
+    <div class="add-box">
+        <h2>Add New Player</h2>
+
+        <input id="newPlayer" placeholder="Player Name">
+        <input id="newSeason" placeholder="Season" value="2025-26">
+        <input id="newTeam" placeholder="Team">
+        <input id="newPosition" placeholder="Position">
+        <input id="newGP" type="number" placeholder="Games Played">
+        <input id="newGoals" type="number" placeholder="Goals">
+        <input id="newAssists" type="number" placeholder="Assists">
+        <input id="newPoints" type="number" placeholder="Points">
+        <input id="newPlusMinus" type="number" placeholder="+/-">
+
+        <button onclick="addPlayer()">Add Player</button>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Search player, team, or position...">
+
+        <select id="statSelect">
+            <option value="goals">Most Goals</option>
+            <option value="assists">Most Assists</option>
+            <option value="points">Most Points</option>
+            <option value="games">Most Games Played</option>
+            <option value="plus_minus">Best Plus/Minus</option>
+        </select>
+
+        <button onclick="loadLeaders()">Find Leaders</button>
+    </div>
+
+    <div class="leader-box">
+        <h2 id="leaderTitle">Top Stat Leaders</h2>
+        <div id="leaderCards"></div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Player</th>
+                <th>Season</th>
+                <th>Team</th>
+                <th>Position</th>
+                <th>GP</th>
+                <th>Goals</th>
+                <th>Assists</th>
+                <th>Points</th>
+                <th>+/-</th>
+            </tr>
+        </thead>
+        <tbody id="playerTable"></tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
