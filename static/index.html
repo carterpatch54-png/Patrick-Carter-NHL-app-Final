@@ -8,7 +8,7 @@
 
     <div class="hero">
         <h1>NHL Player Stats Dashboard</h1>
-        <p>Search players, add new stats, and find stat leaders.</p>
+        <p>Search, filter, sort, add, delete, and view stat leaders.</p>
     </div>
 
     <div class="add-box">
@@ -30,19 +30,49 @@
     <div class="controls">
         <input type="text" id="searchInput" placeholder="Search player, team, or position...">
 
-        <select id="statSelect">
-            <option value="goals">Most Goals</option>
-            <option value="assists">Most Assists</option>
-            <option value="points">Most Points</option>
-            <option value="games">Most Games Played</option>
-            <option value="plus_minus">Best Plus/Minus</option>
+        <select id="teamFilter">
+            <option value="">All Teams</option>
         </select>
 
-        <button onclick="loadLeaders()">Find Leaders</button>
+        <select id="positionFilter">
+            <option value="">All Positions</option>
+            <option value="C">Center</option>
+            <option value="L">Left Wing</option>
+            <option value="R">Right Wing</option>
+            <option value="D">Defense</option>
+        </select>
+
+        <select id="sortSelect">
+            <option value="">Sort By</option>
+            <option value="points">Points</option>
+            <option value="goals">Goals</option>
+            <option value="assists">Assists</option>
+            <option value="games_played">Games Played</option>
+            <option value="plus_minus">Plus/Minus</option>
+        </select>
+
+        <button onclick="resetFilters()">Reset</button>
+    </div>
+
+    <div class="count-box">
+        <p id="playerCount">Loading players...</p>
     </div>
 
     <div class="leader-box">
         <h2 id="leaderTitle">Top Stat Leaders</h2>
+
+        <div class="leader-controls">
+            <select id="statSelect">
+                <option value="goals">Most Goals</option>
+                <option value="assists">Most Assists</option>
+                <option value="points">Most Points</option>
+                <option value="games">Most Games Played</option>
+                <option value="plus_minus">Best Plus/Minus</option>
+            </select>
+
+            <button onclick="loadLeaders()">Find Leaders</button>
+        </div>
+
         <div id="leaderCards"></div>
     </div>
 
@@ -58,6 +88,7 @@
                 <th>Assists</th>
                 <th>Points</th>
                 <th>+/-</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody id="playerTable"></tbody>

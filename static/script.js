@@ -5,12 +5,61 @@ async function loadPlayers() {
     const players = await response.json();
 
     allPlayers = players;
-    displayPlayers(players);
+    fillTeamFilter(players);
+    applyFilters();
+}
+
+function fillTeamFilter(players) {
+    const teamFilter = document.getElementById("teamFilter");
+    const currentValue = teamFilter.value;
+
+    const teams = [...new Set(players.map(player => player.team))].sort();
+
+    teamFilter.innerHTML = `<option value="">All Teams</option>`;
+
+    teams.forEach(team => {
+        const option = document.createElement("option");
+        option.value = team;
+        option.textContent = team;
+        teamFilter.appendChild(option);
+    });
+
+    teamFilter.value = currentValue;
+}
+
+function applyFilters() {
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    const team = document.getElementById("teamFilter").value;
+    const position = document.getElementById("positionFilter").value;
+    const sortBy = document.getElementById("sortSelect").value;
+
+    let filtered = allPlayers.filter(player =>
+        player.player.toLowerCase().includes(search) ||
+        player.team.toLowerCase().includes(search) ||
+        player.position.toLowerCase().includes(search)
+    );
+
+    if (team !== "") {
+        filtered = filtered.filter(player => player.team === team);
+    }
+
+    if (position !== "") {
+        filtered = filtered.filter(player => player.position === position);
+    }
+
+    if (sortBy !== "") {
+        filtered.sort((a, b) => b[sortBy] - a[sortBy]);
+    }
+
+    displayPlayers(filtered);
 }
 
 function displayPlayers(players) {
     const table = document.getElementById("playerTable");
+    const count = document.getElementById("playerCount");
+
     table.innerHTML = "";
+    count.textContent = `${players.length} player(s) showing out of ${allPlayers.length}`;
 
     players.forEach(player => {
         const row = document.createElement("tr");
@@ -25,6 +74,7 @@ function displayPlayers(players) {
             <td>${player.assists}</td>
             <td>${player.points}</td>
             <td>${player.plus_minus}</td>
+            <td><button class="delete-btn" onclick="deletePlayer(${player.id})">Delete</button></td>
         `;
 
         table.appendChild(row);
@@ -85,6 +135,21 @@ async function addPlayer() {
         body: JSON.stringify(newPlayer)
     });
 
+    clearAddForm();
+    loadPlayers();
+    loadLeaders();
+}
+
+async function deletePlayer(id) {
+    await fetch(`/players/${id}`, {
+        method: "DELETE"
+    });
+
+    loadPlayers();
+    loadLeaders();
+}
+
+function clearAddForm() {
     document.getElementById("newPlayer").value = "";
     document.getElementById("newTeam").value = "";
     document.getElementById("newPosition").value = "";
@@ -93,22 +158,20 @@ async function addPlayer() {
     document.getElementById("newAssists").value = "";
     document.getElementById("newPoints").value = "";
     document.getElementById("newPlusMinus").value = "";
-
-    loadPlayers();
-    loadLeaders();
 }
 
-document.getElementById("searchInput").addEventListener("input", function() {
-    const search = this.value.toLowerCase();
+function resetFilters() {
+    document.getElementById("searchInput").value = "";
+    document.getElementById("teamFilter").value = "";
+    document.getElementById("positionFilter").value = "";
+    document.getElementById("sortSelect").value = "";
+    applyFilters();
+}
 
-    const filtered = allPlayers.filter(player =>
-        player.player.toLowerCase().includes(search) ||
-        player.team.toLowerCase().includes(search) ||
-        player.position.toLowerCase().includes(search)
-    );
-
-    displayPlayers(filtered);
-});
+document.getElementById("searchInput").addEventListener("input", applyFilters);
+document.getElementById("teamFilter").addEventListener("change", applyFilters);
+document.getElementById("positionFilter").addEventListener("change", applyFilters);
+document.getElementById("sortSelect").addEventListener("change", applyFilters);
 
 loadPlayers();
 loadLeaders();

@@ -37,8 +37,7 @@ class PlayerCreate(SQLModel):
 @app.get("/players")
 def get_players():
     with Session(engine) as session:
-        players = session.exec(select(Player)).all()
-        return players
+        return session.exec(select(Player)).all()
 
 
 @app.post("/players")
@@ -62,6 +61,19 @@ def add_player(new_player: PlayerCreate):
         return player
 
 
+@app.delete("/players/{player_id}")
+def delete_player(player_id: int):
+    with Session(engine) as session:
+        player = session.get(Player, player_id)
+
+        if player:
+            session.delete(player)
+            session.commit()
+            return {"message": "Player deleted"}
+
+        return {"message": "Player not found"}
+
+
 @app.get("/leaders/{stat}")
 def get_leaders(stat: str):
     allowed_stats = {
@@ -77,8 +89,7 @@ def get_leaders(stat: str):
 
     with Session(engine) as session:
         statement = select(Player).order_by(allowed_stats[stat].desc()).limit(5)
-        leaders = session.exec(statement).all()
-        return leaders
+        return session.exec(statement).all()
 
 
 app.mount("/", StaticFiles(directory="static", html=True), name="static")
